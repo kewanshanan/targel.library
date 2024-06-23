@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Kewan's Library</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            height: 50px;
+        }
+        h1 {
+            color: #333;
+            margin: 0;
+        }
+        a {
+            display: inline-block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        form {
+            margin: 0;
+        }
+        .message {
+            color: #28a745;
+            margin-top: 10px;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .nav-links a {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kewan's Library</h1>
+            <img src="http://localhost:63342/targelamtsa/logo.png" height="500" width="100" alt="Logo" />
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('add_book') }}">Add Book</a>
+            <a href="{{ url_for('search_books') }}">Search</a>
+            <a href="{{ url_for('about_us') }}">About Us</a>
+            <a href="{{ url_for('contact_us') }}">Contact Us</a>
+        </div>
+        <ul>
+            {% for book in books %}
+                <li>
+                    <div>
+                        <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.publication_year }}), Genre: {{ book.genre }}
+                    </div>
+                    <div>
+                        <a href="{{ url_for('edit_book', book_index=loop.index0) }}">Edit</a>
+                        <form action="{{ url_for('delete_book', book_index=loop.index0) }}" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="message">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
