@@ -13,3 +13,4 @@ class Book:
 
     def __str__(self):
         return f"{self.title} by {self.author}, {self.publication_year}, Genre: {self.genre}, Last Updated: {self.last_updated}"
+# end.
